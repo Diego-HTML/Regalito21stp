@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiori per Te</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fffbe6;
+            text-align: center;
+            padding: 50px;
+        }
+        #canvas {
+            border: 1px solid #000;
+            background-color: #ffffff;
+            display: block;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tre Fiori per Te</h1>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <p>Con affetto, per te!</p>
+
+    <script>
+        function drawFlower(ctx, x, y) {
+            // Disegna il centro del fiore
+            ctx.beginPath();
+            ctx.arc(x, y, 30, 0, 2 * Math.PI, false);
+            ctx.fillStyle = '#ffa500'; // Colore del centro
+            ctx.fill();
+            ctx.stroke();
+
+            // Disegna i petali
+            for (let i = 0; i < 6; i++) {
+                const angle = (i * 60) * (Math.PI / 180);
+                const petalX = x + 50 * Math.cos(angle);
+                const petalY = y + 50 * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.arc(petalX, petalY, 20, 0, 2 * Math.PI, false);
+                ctx.fillStyle = '#ffcc00'; // Colore dei petali
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+
+        function animateFlowers() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const xPositions = [150, 250, 350];
+            const yPosition = 250;
+
+            let currentFlower = 0;
+
+            function drawNextFlower() {
+                if (currentFlower < xPositions.length) {
+                    drawFlower(ctx, xPositions[currentFlower], yPosition);
+                    currentFlower++;
+                    setTimeout(drawNextFlower, 1000); // Disegna il fiore successivo dopo 1 secondo
+                }
+            }
+
+            drawNextFlower();
+        }
+
+        window.onload = animateFlowers;
+    </script>
+</body>
+</html>
